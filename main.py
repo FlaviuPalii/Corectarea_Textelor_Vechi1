@@ -57,6 +57,7 @@ def evaluate_results(original_text, corrected_text):
 
 
 # Funcție pentru deschiderea fișierului de text
+# Funcție pentru deschiderea fișierului de text
 def open_file():
     file_path = filedialog.askopenfilename(filetypes=[('Text Files', '*.txt')])
     if file_path:
@@ -64,7 +65,15 @@ def open_file():
             text = file.read()
         corrected_text = correct_errors(dictionary, text)
         precision_score, recall_score, f1_score = evaluate_results(text, corrected_text)
-        messagebox.showinfo('Rezultate', f'Precision: {precision_score:.2f}\nRecall: {recall_score:.2f}\nF1 Score: {f1_score:.2f}')
+        messagebox.showinfo('Rezultate',
+                            f'Precision: {precision_score:.2f}\nRecall: {recall_score:.2f}\nF1 Score: {f1_score:.2f}')
+
+        save_file_path = filedialog.asksaveasfilename(defaultextension='.txt', filetypes=[('Text Files', '*.txt')])
+        if save_file_path:
+            with open(save_file_path, 'w') as save_file:
+                save_file.write(corrected_text)
+                messagebox.showinfo('Salvare', 'Textul corectat a fost salvat cu succes.')
+
 
 # Funcție pentru închiderea aplicației
 def exit_app():
